@@ -12,10 +12,10 @@ import com.filipe.repositories.InterfaceCategoriaRepository;
 public class CategoriaService {
 	
 	@Autowired
-	private InterfaceCategoriaRepository repository;
+	private InterfaceCategoriaRepository repo;
 
-	public Categoria buscarPorId(Long id) {	
-		Optional<Categoria> obj = repository.findById(id);
+	public Categoria buscarPorId(Long id) {
+		Optional<Categoria> obj = repo.findById(id);
 		return obj.orElse(null);
 	}
 }
