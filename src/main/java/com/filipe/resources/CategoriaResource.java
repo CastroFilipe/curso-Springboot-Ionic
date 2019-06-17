@@ -17,10 +17,14 @@ public class CategoriaResource {
 	@Autowired
 	private CategoriaService service;
 	
+	//ResponseEntity<?> tipo do springframework que encapsula informações de uma resposta HTTP para um serviço rest
+	//@PathVariable, necessário para informar que o Integer id irá receber o {id} da url
 	@GetMapping("/{id}")
-	public ResponseEntity<?> find(@PathVariable Long id) {
-		Categoria obj = service.buscarPorId(id);
-		return ResponseEntity.ok().body(obj);
+	public ResponseEntity<?> find(@PathVariable Integer id) {
+		Categoria categoria = service.buscarPorId(id);
+
+		//cria um objeto ReponseEntity com o status Ok e com uma categoria como conteúdo do corpo.
+		return ResponseEntity.ok().body(categoria);
 	}
 	
 }
