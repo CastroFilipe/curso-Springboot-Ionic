@@ -14,8 +14,11 @@ public class CategoriaService {
 	@Autowired
 	private InterfaceCategoriaRepository repo;
 
+	//metodo que busca uma Categoria por ID
 	public Categoria buscarPorId(Long id) {
+		
+		//
 		Optional<Categoria> obj = repo.findById(id);
-		return obj.orElse(null);
+		return obj.orElse(null); //retorna null caso o obejeto não for encontrado.
 	}
 }
