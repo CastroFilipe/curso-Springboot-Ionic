@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Produto implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -25,6 +27,7 @@ public class Produto implements Serializable {
 	// JoinTable criará uma tabela intermediaria em relacionamentos muitos para
 	// muitos.
 	// A tabela conterá a chave de cada entidade do relacionamento.
+	@JsonBackReference
 	@ManyToMany
 	@JoinTable(
 			name = "PRODUTO_CATEGORIA", 
