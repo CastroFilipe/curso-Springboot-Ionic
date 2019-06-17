@@ -1,6 +1,7 @@
 package com.filipe.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -19,7 +20,7 @@ public class Categoria implements Serializable{
 	private String nome;
 	
 	@ManyToMany(mappedBy = "categorias")
-	private List<Produto> produtos;
+	private List<Produto> produtos = new ArrayList<Produto>();
 	
 	public Categoria() {
 	}

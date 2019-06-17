@@ -8,13 +8,18 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.filipe.domain.Categoria;
-import com.filipe.services.CategoriaService;
+import com.filipe.domain.Produto;
+import com.filipe.repositories.InterfaceCategoriaRepository;
+import com.filipe.repositories.InterfaceProdudoRepository;
 
 @SpringBootApplication
 public class CursoSpringbootIonicApplication implements CommandLineRunner {
 
 	@Autowired
-	private CategoriaService service;
+	private InterfaceCategoriaRepository categoriaRepository;
+	
+	@Autowired
+	private InterfaceProdudoRepository produtoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursoSpringbootIonicApplication.class, args);
@@ -25,7 +30,21 @@ public class CursoSpringbootIonicApplication implements CommandLineRunner {
 		Categoria cat1 = new Categoria(null, "Informatica");
 		Categoria cat2 = new Categoria(null,"Escritório");
 		
-		service.salvarTodos(Arrays.asList(cat1,cat2));
+		Produto p1 = new Produto(null, "Computador", 2000.00);
+		Produto p2 = new Produto(null, "Impressora", 800.00);
+		Produto p3 = new Produto(null, "Mouse", 80.00);
+		
+		cat1.getProdutos().addAll(Arrays.asList(p1, p2));
+		cat2.getProdutos().addAll(Arrays.asList(p2));
+		
+		p1.getCategorias().addAll(Arrays.asList(cat1));
+		p2.getCategorias().addAll(Arrays.asList(cat1, cat2));
+		p3.getCategorias().addAll(Arrays.asList(cat1));
+		
+		categoriaRepository.saveAll(Arrays.asList(cat1,cat2));
+		produtoRepository.saveAll(Arrays.asList(p1,p2,p3));
+		
+
 
 	}
 

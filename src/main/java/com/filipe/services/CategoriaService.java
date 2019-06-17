@@ -22,7 +22,7 @@ public class CategoriaService {
 		return obj.orElse(null); //retorna null caso o obejeto não for encontrado.
 	}
 	
-	public void salvarTodos(List<Categoria> categorias) {
-		repo.saveAll(categorias);
-	}
+//	public void salvarTodos(List<Categoria> categorias) {
+//		repo.saveAll(categorias);
+//	}
 }
