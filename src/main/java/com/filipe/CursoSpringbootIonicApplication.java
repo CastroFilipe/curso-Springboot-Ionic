@@ -9,17 +9,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.filipe.domain.Categoria;
 import com.filipe.domain.Produto;
-import com.filipe.repositories.InterfaceCategoriaRepository;
-import com.filipe.repositories.InterfaceProdudoRepository;
+import com.filipe.repositories.CategoriaRepository;
+import com.filipe.repositories.ProdudoRepository;
 
 @SpringBootApplication
 public class CursoSpringbootIonicApplication implements CommandLineRunner {
 
 	@Autowired
-	private InterfaceCategoriaRepository categoriaRepository;
+	private CategoriaRepository categoriaRepository;
 	
 	@Autowired
-	private InterfaceProdudoRepository produtoRepository;
+	private ProdudoRepository produtoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursoSpringbootIonicApplication.class, args);

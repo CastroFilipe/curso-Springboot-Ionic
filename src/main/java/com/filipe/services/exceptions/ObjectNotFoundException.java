@@ -7,6 +7,7 @@ public class ObjectNotFoundException extends RuntimeException {
 		super(descricao);
 	}
 	
+	//Throwable a causa de uma exceção que aconteceu antes
 	public ObjectNotFoundException(String descricao, Throwable cause) {
 		super(descricao, cause);
 	}

@@ -13,10 +13,14 @@ import com.filipe.services.exceptions.ObjectNotFoundException;
 public class ResourceExceptionHandler {
 	//classe para manipular as exceções lançadas ao pacote resources
 	
+	//indica que é um tratador de exceções do tipo ObjectNotFoundException
 	@ExceptionHandler(ObjectNotFoundException.class)
+	
+	//Recebe um ObjectNotFoundException e um request(as informações da requisição). Parametros padrões do framework
 	public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException e, 
 			HttpServletRequest request){
 		
+		//criar um objeto padrão err com o Status 404, uma mensagem e o momento da ocorrencia
 		StandardError err = new StandardError(
 				HttpStatus.NOT_FOUND.value(), 
 				e.getMessage(),
