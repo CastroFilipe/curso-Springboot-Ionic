@@ -1,4 +1,4 @@
-package com.filipe.resources;
+package com.filipe.resourcesController;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

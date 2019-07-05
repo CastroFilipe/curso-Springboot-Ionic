@@ -12,6 +12,9 @@ import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+/**
+ * @Entity indica ao JPA que essa classe é uma Entidade e será p
+ * */
 @Entity
 public class Categoria implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -20,6 +23,10 @@ public class Categoria implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	
+	/**
+	 * 
+	 * */
 	
 	@JsonManagedReference //Em conjunto com @JsonBackReference eliminará o ciclo infinito de busca de objetos
 	@ManyToMany(mappedBy = "categorias")

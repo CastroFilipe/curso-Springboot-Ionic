@@ -14,6 +14,9 @@ import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import lombok.Data;
+
+@Data
 @Entity
 public class Produto implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -24,9 +27,13 @@ public class Produto implements Serializable {
 	private String nome;
 	private Double preco;
 
-	// JoinTable criará uma tabela intermediaria em relacionamentos muitos para
-	// muitos.
-	// A tabela conterá a chave de cada entidade do relacionamento.
+	/**
+	 * JoinTable criará uma tabela intermediaria em relacionamentos muitos para muitos.
+	 * A tabela conterá a chave de cada entidade do relacionamento.
+	 * 
+	 * 
+	 * 
+	 */
 	@JsonBackReference
 	@ManyToMany
 	@JoinTable(

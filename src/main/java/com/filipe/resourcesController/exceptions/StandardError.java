@@ -1,4 +1,4 @@
-package com.filipe.resources.exceptions;
+package com.filipe.resourcesController.exceptions;
 
 import java.io.Serializable;
 

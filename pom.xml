@@ -46,6 +46,19 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok 
+			Ferramenta automatica que gera getters, setters, equals, 
+			hashCode and toString, and more!
+			Ver anotação @Data nas classes de entidade
+		-->
+		<dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <version>1.18.8</version>
+		    <scope>provided</scope>
+		</dependency>
+		
 
 	</dependencies>
 
