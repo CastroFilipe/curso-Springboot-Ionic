@@ -2,14 +2,16 @@ package com.filipe.resourcesController.exceptions;
 
 import java.io.Serializable;
 
+/**
+ * Uma classe que representa um erro padrão para ser enviado como resposta 
+ * a requisições rest.
+ * */
 public class StandardError implements Serializable{
 	private static final long serialVersionUID = 1L;
-	//objeto auxiliar para representar um erro padrão
-	
 	
 	private Integer status; //status http do erro
 	private String msg;//msg do erro
-	private Long timeStamp; //momento de oorrencia do erro
+	private Long timeStamp; //momento de ocorrencia do erro
 	
 	public StandardError() {
 	}

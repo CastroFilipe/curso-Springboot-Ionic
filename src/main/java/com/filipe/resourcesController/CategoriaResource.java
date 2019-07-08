@@ -17,10 +17,27 @@ public class CategoriaResource {
 	@Autowired
 	private CategoriaService service;
 	
-	//ResponseEntity<?> tipo do springframework que encapsula informações de uma resposta HTTP para um serviço rest
-	//@PathVariable, necessário para informar que o Integer id irá receber o {id} da url
+	/**
+	 * @ResponseEntity<?> tipo do springframework que encapsula informações de uma 
+	 * resposta HTTP para um serviço rest
+	 * 
+	 * @PathVariable, necessário para informar que o Integer id irá receber o {id} 
+	 * que veio na url
+	 * */
 	@GetMapping("/{id}")
 	public ResponseEntity<?> find(@PathVariable Integer id) {
+		
+		/**
+		 * Chama o método buscarPorId(). Esse método poderá lançar uma exceção 
+		 * (ObjectNotFoundException) se o objeto não for encontrado.
+		 * 
+		 * Se a exceção for lançada: Utilizar um tryCatch para tratar ou utilizar um Objeto 
+		 * do tipo Handler.
+		 * Objetos Handler utilizam a anotação @ControllerAdvice que, em resumo, interceptará
+		 * a exceção lançada. Com isso o códio de tratamento será colocado em outra classe,
+		 * deixando o código mais organizado.
+		 * 
+		 * */
 		Categoria categoria = service.buscarPorId(id);
 
 		//cria um objeto ReponseEntity com o status Ok e com uma categoria como conteúdo do corpo.

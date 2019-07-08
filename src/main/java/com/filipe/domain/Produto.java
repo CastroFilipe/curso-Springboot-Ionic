@@ -16,6 +16,10 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.Data;
 
+/**
+ * Data: Anotação do pacote lombok que gera 
+ * getters e setters, hashCode and equals, to string entre outros
+ * */
 @Data
 @Entity
 public class Produto implements Serializable {
@@ -28,10 +32,13 @@ public class Produto implements Serializable {
 	private Double preco;
 
 	/**
-	 * JoinTable criará uma tabela intermediaria em relacionamentos muitos para muitos.
-	 * A tabela conterá a chave de cada entidade do relacionamento.
+	 * JsonBackReference: Cada entidade do tipo Categoria tem uma coleção de Produtos 
+	 * e cada entidade do tipo Produto tem uma coleção de categorias.  Para evitar uma 
+	 * referência cíclica em relacionamentos ManyToMany  as anotações  JsonBackReference 
+	 * e JsonManagedReference devem ser utilizadas em conjunto.  
 	 * 
-	 * 
+	 * JoinTable: Anotação necessária para criar uma tabela intermediaria entre duas 
+	 * entidades que possuem relacionamento ManyToMany.
 	 * 
 	 */
 	@JsonBackReference
