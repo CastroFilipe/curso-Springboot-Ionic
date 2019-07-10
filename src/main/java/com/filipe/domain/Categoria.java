@@ -13,7 +13,8 @@ import javax.persistence.ManyToMany;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 /**
- * @Entity indica ao JPA que essa classe é uma Entidade e será p
+ * @Entity indica ao JPA que essa classe é uma Entidade. Assim o hibernate fará a persistência da
+ * classe no banco.
  * */
 @Entity
 public class Categoria implements Serializable{

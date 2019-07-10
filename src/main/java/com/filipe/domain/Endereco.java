@@ -14,6 +14,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 /**
  * Classe que define um endereço.
  * O endereço contém a chave estrangeira do Cliente a qual estará vinculado.
+ * 
+ * @Entity indica ao JPA que essa classe é uma Entidade. Assim o hibernate fará a persistência da
+ * classe no banco.
  * */
 @Entity
 public class Endereco implements Serializable {

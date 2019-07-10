@@ -12,6 +12,13 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+/**
+ * Classe que define um Estado.
+ * Contém ums lista de cidades
+ * 
+ * @Entity indica ao JPA que essa classe é uma Entidade. Assim o hibernate fará a persistência da
+ * classe no banco.
+ * */
 @Entity
 public class Estado implements Serializable {
 	private static final long serialVersionUID = 1L;

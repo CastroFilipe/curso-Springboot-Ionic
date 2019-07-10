@@ -17,8 +17,13 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 /**
- * Data: Anotação do pacote lombok que gera 
- * getters e setters, hashCode and equals, to string entre outros
+ * Classe que representa um Produto
+ * 
+ * @Entity indica ao JPA que essa classe é uma Entidade. Assim o hibernate fará a persistência da
+ * classe no banco.
+ * 
+ * @Data: Anotação do pacote lombok que gera getters e setters, hashCode and equals, 
+ * toString entre outros. Fazer testes e checar as funcionalidades.
  * */
 @Data
 @Entity

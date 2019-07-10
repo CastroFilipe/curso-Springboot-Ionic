@@ -11,6 +11,10 @@ import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+/**
+ * @Entity indica ao JPA que essa classe é uma Entidade. Assim o hibernate fará a persistência da
+ * classe no banco.
+ * */
 @Entity
 public class Cidade implements Serializable {
 	private static final long serialVersionUID = 1L;
