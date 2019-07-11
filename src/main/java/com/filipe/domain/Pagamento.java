@@ -29,10 +29,13 @@ import com.filipe.domain.enums.EstadoPagamento;
  * num único "Tabelão" no banco de dados. Se necessário salvar um PagamentoComBoleto, por exemplo,
  * será preciso definir as colunas referentes a PagamentoComCartao como null no banco de dados e 
  * vice-versa.
+ * 
+ * A classe será abstrata para não permitir a instanciação de objetos do tipo Pagamento. 
+ * Para instanciar utilize as subclasses PagamentoComBoleto e PagamentoComCartao
  * */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Pagamento implements Serializable {
+public abstract class Pagamento implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
