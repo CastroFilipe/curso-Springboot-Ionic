@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.filipe.domain.enums.EstadoPagamento;
 
 /**
@@ -17,7 +18,14 @@ import com.filipe.domain.enums.EstadoPagamento;
 public class PagamentoComBoleto extends Pagamento {
 	private static final long serialVersionUID = 1L;
 	
+	/*
+	 * @JsonFormat formata o instante para o padrão especificado. 
+	 * Se não for formatado a dataVencimento conterá os milisegundos desde 1970
+	 * */
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataVencimento;
+	
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private Date dataPagamento;
 	
 	public PagamentoComBoleto() {

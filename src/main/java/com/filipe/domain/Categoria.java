@@ -10,8 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 /**
  * @Entity indica ao JPA que essa classe é uma Entidade. Assim o hibernate fará a persistência da
  * classe no banco.
@@ -25,14 +23,6 @@ public class Categoria implements Serializable{
 	private Integer id;
 	private String nome;
 	
-	/**
-	 * JsonManagedReference: Cada entidade do tipo Categoria tem uma coleção de Produtos 
-	 * e cada entidade do tipo Produto tem uma coleção de categorias.  Para evitar uma 
-	 * referência cíclica em relacionamentos ManyToMany  as anotações  JsonBackReference 
-	 * e JsonManagedReference devem ser utilizadas em conjunto.  
-	 * */
-	
-	@JsonManagedReference //Em conjunto com @JsonBackReference eliminará o ciclo infinito de busca de objetos
 	@ManyToMany(mappedBy = "categorias")
 	private List<Produto> produtos = new ArrayList<Produto>();
 	

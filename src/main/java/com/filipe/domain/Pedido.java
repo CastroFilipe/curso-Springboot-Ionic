@@ -2,6 +2,8 @@ package com.filipe.domain;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,7 +12,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * Classe que define um pedido.
@@ -26,6 +31,11 @@ public class Pedido implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	/*
+	 * @JsonFormat formata o instante para o padrão especificado. 
+	 * Se não for formatado o instante conterá os milisegundos desde 1970
+	 * */
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date instante;
 	
 	/**
@@ -50,6 +60,13 @@ public class Pedido implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="endereco_entrega_id")
 	private Endereco enderecoDeEntrega;
+	
+	/*A entidade Pedido deve conhecer a entidade de Ligação ItemPedido
+	 * O mapeamento se dá no atributo pedido declarado na classe ItemPedidoPK.
+	 * Logo usaremos (mappedBy = "id.pedido")
+	 * */
+	@OneToMany(mappedBy = "id.pedido")
+	private Set<ItemPedido> itens = new HashSet<>();
 	
 	public Pedido() {
 	}
@@ -98,6 +115,14 @@ public class Pedido implements Serializable {
 	public void setEnderecoDeEntrega(Endereco enderecoDeEntrega) {
 		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
+	
+	public Set<ItemPedido> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<ItemPedido> itens) {
+		this.itens = itens;
+	}
 
 	@Override
 	public int hashCode() {
@@ -128,5 +153,4 @@ public class Pedido implements Serializable {
 	public String toString() {
 		return "Pedido [id=" + id + "]";
 	}
-
 }

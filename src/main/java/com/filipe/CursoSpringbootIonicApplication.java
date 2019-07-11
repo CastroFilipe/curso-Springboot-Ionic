@@ -13,6 +13,7 @@ import com.filipe.domain.Cidade;
 import com.filipe.domain.Cliente;
 import com.filipe.domain.Endereco;
 import com.filipe.domain.Estado;
+import com.filipe.domain.ItemPedido;
 import com.filipe.domain.Pagamento;
 import com.filipe.domain.PagamentoComBoleto;
 import com.filipe.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.filipe.repositories.CidadeRepository;
 import com.filipe.repositories.ClienteRepository;
 import com.filipe.repositories.EnderecoRepository;
 import com.filipe.repositories.EstadoRepository;
+import com.filipe.repositories.ItemPedidoRepository;
 import com.filipe.repositories.PagamentoRepository;
 import com.filipe.repositories.PedidoRepository;
 import com.filipe.repositories.ProdutoRepository;
@@ -55,6 +57,9 @@ public class CursoSpringbootIonicApplication implements CommandLineRunner {
 	
 	@Autowired
 	private PedidoRepository pedidoRepository;
+	
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CursoSpringbootIonicApplication.class, args);
@@ -137,6 +142,21 @@ public class CursoSpringbootIonicApplication implements CommandLineRunner {
 		pedidoRepository.saveAll(Arrays.asList(ped1,ped2));
 		
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
+		
+		/*Usando a tabela ItemPedido para ligar os Pedidos aos produtos*/
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1,ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		//Salvando ItemPedido
+		itemPedidoRepository.saveAll(Arrays.asList(ip1,ip2,ip3));
 		
 	}
 
