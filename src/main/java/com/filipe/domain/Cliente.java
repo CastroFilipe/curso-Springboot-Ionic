@@ -50,6 +50,7 @@ public class Cliente implements Serializable {
 	 * O Conjunto de telefones é uma "entidade fraca", não criamos uma classe no pacote model
 	 * que represente um telefone. O mapeamento será feito a partir das anotações 
 	 * @ElementCollection e @CollectionTable
+	 * Logo a tabela de telefones no banco de dados não conterá um id próprio e sim o id do cliente.
 	 * 
 	 * */
 	@ElementCollection

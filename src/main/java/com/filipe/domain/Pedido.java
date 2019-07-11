@@ -28,13 +28,25 @@ public class Pedido implements Serializable {
 	
 	private Date instante;
 	
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")//Peculiaridade do JPA para o caso em que usamos o @MapsId na classe pagamento
+	/**
+	 *  A função do cascade é cascatear operações de persistência.
+	 *  Realizar operações em cascata só faz sentido em relacionamentos Pai - Filho 
+	 *  (a transição do estado da entidade Pai sendo realizada em cascata na entidade Filho).
+	 *  
+	 *  CascadeType.ALL executa todas as operações de cascade(Exclusão, atualização, etc).
+	 *  Usamos o CascadeType pois utilizamos o @MapsId na classe Pagamento.
+	 * */
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
 	private Pagamento pagamento;
 	
+	/*Um pedido pertence a um único cliente e um cliente pode ter mais de um pedido*/
 	@ManyToOne
 	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
 	
+	
+	/*Um pedido possui apenas um endereço de entrega, todavia vários pedidos podem ser 
+	 * entregues no mesmo endereço*/
 	@ManyToOne
 	@JoinColumn(name="endereco_entrega_id")
 	private Endereco enderecoDeEntrega;

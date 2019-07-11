@@ -40,9 +40,18 @@ public class Pagamento implements Serializable {
 
 	private Integer estadoPagamento;
 	
+	/**
+	 * @MapsId o id da classe Pagamento será o mesmo do pedido correspondente. Assim a classe 
+	 * Pagamento possui um id que será igual ao id da classe Pagamento. Por essa razão omitimos
+	 * a declaração @GeneratedValue(strategy = GenerationType.IDENTITY) no id dessa classe pois o
+	 * mesmo será gerado a partir do id do Pedido.
+	 * 
+	 * O id_pedido também será o id das classes PagamentoComBoleto e PagamentoComCartao 
+	 * que herdam de Pagamento. 
+	 * */
 	@OneToOne
 	@JoinColumn(name="pedido_id")
-	@MapsId //indica que o id da classe Pagamento será o mesmo do pedido correspondente. Logo não usamo GeneretadValue
+	@MapsId
 	private Pedido pedido;
 	
 	public Pagamento() {
