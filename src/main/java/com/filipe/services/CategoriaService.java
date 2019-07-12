@@ -42,4 +42,22 @@ public class CategoriaService {
 		return obj.orElseThrow(()->new ObjectNotFoundException(
 				"Objeto não Encontrado! Id: " + id + " ,tipo:"+ Categoria.class.getName()));
 	}
+	
+	/**
+	 * Método para inserir uma categoria.
+	 * */
+	public Categoria insert(Categoria obj) {
+		/*
+		 * Garante que qualquer categoria a ser inserida tenha o id nulo pois,
+		 * quando o id não for nulo, o objeto categoria estará sendo atualizado e 
+		 * não inserido.
+		 * 
+		 * */
+		obj.setId(null);
+		
+		/*
+		 * Salva o objeto e retorna o para o controller o própio Objeto.
+		 * */
+		return repo.save(obj);
+	}
 }
