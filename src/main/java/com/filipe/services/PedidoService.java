@@ -19,7 +19,7 @@ public class PedidoService {
 	 * Método que busca uma Pedido por ID, caso não encontre Lança uma exceção 
 	 * personalizada (Uma exceção criada pelo programador).
 	 * */
-	public Pedido buscarPorId(Integer id) {
+	public Pedido find(Integer id) {
 		
 		/**
 		 * findById() retorna um Objeto Optional.

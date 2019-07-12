@@ -20,7 +20,7 @@ public class ClienteService {
 	 * ObjectNotFoundException.
 	 * Para mais detalhes ver a classe CategoriaService que possuí o mesmo método
 	 * */
-	public Cliente buscarPorId(Integer id) {
+	public Cliente find(Integer id) {
 		Optional<Cliente> clienteOptional = clienteRepository.findById(id);
 		
 		return clienteOptional.orElseThrow(() -> new ObjectNotFoundException(

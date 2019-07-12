@@ -25,7 +25,7 @@ public class PedidoResource {
 	 * que veio na url
 	 * */
 	@GetMapping("/{id}")
-	public ResponseEntity<?> find(@PathVariable Integer id) {
+	public ResponseEntity<Pedido> find(@PathVariable Integer id) {
 		
 		/**
 		 * Chama o método buscarPorId(). Esse método poderá lançar uma exceção 
@@ -38,7 +38,7 @@ public class PedidoResource {
 		 * deixando o código mais organizado.
 		 * 
 		 * */
-		Pedido pedido = service.buscarPorId(id);
+		Pedido pedido = service.find(id);
 
 		//cria um objeto ReponseEntity com o status Ok e com uma categoria como conteúdo do corpo.
 		return ResponseEntity.ok().body(pedido);

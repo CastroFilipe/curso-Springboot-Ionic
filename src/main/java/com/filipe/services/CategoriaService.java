@@ -19,7 +19,7 @@ public class CategoriaService {
 	 * Método que busca uma Categoria por ID, caso não encontre Lança uma exceção 
 	 * personalizada (Uma exceção criada pelo programador).
 	 * */
-	public Categoria buscarPorId(Integer id) {
+	public Categoria find(Integer id) {
 		
 		/**
 		 * findById() retorna um Objeto Optional.
@@ -44,7 +44,9 @@ public class CategoriaService {
 	}
 	
 	/**
-	 * Método para inserir uma categoria.
+	 * Método para inserir uma objeto no banco de dados.
+	 * 
+	 * @param obj um objeto a ser inserido
 	 * */
 	public Categoria insert(Categoria obj) {
 		/*
@@ -58,6 +60,22 @@ public class CategoriaService {
 		/*
 		 * Salva o objeto e retorna o para o controller o própio Objeto.
 		 * */
+		return repo.save(obj);
+	}
+	
+	/**
+	 * Método para atualizar um objeto no banco de dados.
+	 * 
+	 * @param obj o objeto a ser atualizado
+	 * */
+	public Categoria update(Categoria obj) {
+		/*Antes de atualizar fazer uma busca no banco para garantir que o objeto exista no banco
+		 * Se não exixtir será lançada a exceção no método buscarPorId*/
+		find(obj.getId());
+		
+		/*O método save é usado tanto para inserir quanto para atualizar.
+		 * Isso é decidido de acordo com o ID. Se o id for nulo ele irá inserir o objeto
+		 * se o id não for nulo, o objeto será atualizado*/
 		return repo.save(obj);
 	}
 }
