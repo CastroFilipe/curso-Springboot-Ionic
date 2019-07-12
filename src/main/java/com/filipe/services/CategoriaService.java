@@ -3,10 +3,12 @@ package com.filipe.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.filipe.domain.Categoria;
 import com.filipe.repositories.CategoriaRepository;
+import com.filipe.services.exceptions.DataIntegrityException;
 import com.filipe.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -77,5 +79,20 @@ public class CategoriaService {
 		 * Isso é decidido de acordo com o ID. Se o id for nulo ele irá inserir o objeto
 		 * se o id não for nulo, o objeto será atualizado*/
 		return repo.save(obj);
+	}
+
+	public void delete(Integer id) {
+		/*Verificando se o objeto a ser excluido realmente existe no banco de dados*/
+		find(id);
+		
+		/*faz a exclusão pelo id. Pode lançar a exceção DataIntegrityViolationException
+		 * caso o objeto seja referenciado em outras tabelas(integridade referêncial) */
+		try {
+			repo.deleteById(id);
+		} catch (DataIntegrityViolationException e){
+			
+			/*lança a exceção personalizada que será capturada no pacote controller */
+			throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos");
+		}
 	}
 }

@@ -4,6 +4,7 @@ import java.net.URI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -110,6 +111,21 @@ public class CategoriaResource {
 		obj = service.update(obj);
 		
 		/*Uma resposta sem conteúdo*/
+		return ResponseEntity.noContent().build();
+	}
+	
+	/**
+	 * Método(DELETE) para remover um objeto do banco de dados
+	 * 
+	 * @param id o id do objeto a ser removido
+	 * 
+	 * @return uma reposta com corpo(body) vazio.
+	 */
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
+		service.delete(id);
+		
+		/*uma resposta com corpo vazio*/
 		return ResponseEntity.noContent().build();
 	}
 	

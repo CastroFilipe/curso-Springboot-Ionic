@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.filipe.services.exceptions.DataIntegrityException;
 import com.filipe.services.exceptions.ObjectNotFoundException;
 
 /**
@@ -22,8 +23,8 @@ import com.filipe.services.exceptions.ObjectNotFoundException;
 public class ResourceExceptionHandler {
 
 	/**
-	 * @ExceptionHandler: Indica que o método objectNotFound() será chamado sempre que
-	 * uma exceção do tipo ObjectNotFoundException surgir no pacote resource/controller.
+	 * Método chamado quando uma exceção do tipo ObjectNotFound for lançada 
+	 * nas classes do pacote controller. 
 	 * 
 	 * @param e exceção do tipo ObjectNotFoundException lançada no pacote controller
 	 * @param request objeto do tipo HttpServletRequest contendo as informações da 
@@ -31,6 +32,10 @@ public class ResourceExceptionHandler {
 	 * 
 	 * @return um Objeto ResponseEntity com o código do erro e o objeto StandardError
 	 * no corpo(body) da resposta
+	 * */
+	/*
+	 * @ExceptionHandler: Indica que o método objectNotFound() será chamado sempre que
+	 * uma exceção do tipo ObjectNotFoundException surgir no pacote resource/controller.
 	 * */
 	@ExceptionHandler(ObjectNotFoundException.class)
 	public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException e, 
@@ -43,5 +48,30 @@ public class ResourceExceptionHandler {
 				System.currentTimeMillis());
 		
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(err);
+	}
+	
+	/**
+	 * Método chamado quando uma exceção do tipo DataIntegrityException for lançada 
+	 * nas classes do pacote controller. 
+	 * 
+	 * @param e exceção do tipo DataIntegrityException lançada no pacote controller
+	 * @param request objeto do tipo HttpServletRequest contendo as informações da 
+	 * requisição.
+	 * 
+	 * @return um Objeto ResponseEntity com o código do erro e o objeto StandardError
+	 * no corpo(body) da resposta
+	 * */
+	@ExceptionHandler(DataIntegrityException.class)
+	public ResponseEntity<StandardError> dataIntegrity(DataIntegrityException e, 
+			HttpServletRequest request){
+		
+		/* instanciará um objeto de erro padrão(StandardError) com o 
+		 * Status 400(BAD REQUEST), uma mensagem e o momento da ocorrência*/
+		StandardError err = new StandardError(
+				HttpStatus.BAD_REQUEST.value(), 
+				e.getMessage(),
+				System.currentTimeMillis());
+		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
 	}
 }
