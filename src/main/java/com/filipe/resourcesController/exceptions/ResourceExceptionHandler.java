@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -72,6 +74,33 @@ public class ResourceExceptionHandler {
 				e.getMessage(),
 				System.currentTimeMillis());
 		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
+	}
+	
+	/**
+	 * Método chamado quando uma exceção do tipo MethodArgumentNotValidException for lançada 
+	 * nas classes do pacote controller. 
+	 * 
+	 * @param e exceção do tipo MethodArgumentNotValidException lançada no pacote controller
+	 * @param request objeto do tipo HttpServletRequest contendo as informações da 
+	 * requisição.
+	 * 
+	 * @return um Objeto ResponseEntity com o código do erro e o objeto ValidationError
+	 * no corpo(body) da resposta
+	 * */
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<StandardError> validation(MethodArgumentNotValidException e, HttpServletRequest request) {
+
+		ValidationError err = new ValidationError(
+				HttpStatus.BAD_REQUEST.value(), 
+				"Erro de validação", 
+				System.currentTimeMillis());
+		/*
+		 * O objeto err do tipo ValidationError possui uma lista<FieldMessage>.
+		 * O for abaixo adiciona o par (ATRIBUTO, Mensagem de erro) na lista de erros do objeto err*/
+		for (FieldError x : e.getBindingResult().getFieldErrors()) {
+			err.addError(x.getField(), x.getDefaultMessage());
+		}		
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(err);
 	}
 }
