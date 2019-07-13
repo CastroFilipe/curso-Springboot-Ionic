@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -167,6 +169,45 @@ public class CategoriaResource {
 		
 		/*cria um objeto ReponseEntity com o status Ok e com uma lista no conteúdo do corpo*/
 		return ResponseEntity.ok().body(listaDTO);
+	}
+	
+	/**
+	 * Método que retorna um objeto Page. Padrão utilizado que faz a listagem de objetos por paginação.
+	 * Uma página é uma sub-lista de uma lista de objetos. Em um banco de dados com muitos registros 
+	 * é penoso utilizar o método findAll() que retorna TODOS os registros. Um objeto Page faz a busca
+	 * por um número limitado de registro, não sobrecarregando o banco de dados com uma consulta 
+	 * findAll() desnecessária.
+	 * Os parâmetros tem um valor padrão definido, por isso sua passagem é opcional.
+	 * 
+	 * @param page informa o número da página. A página inicial é a de número zero.
+	 * @param linesPerPage Informa o número de registro máximo em cada página. Ou seja,
+	 * quantas linhas por página. 
+	 * @param orderBy O identificador do atributo pelo qual os registros serão ordenados. 
+	 * @param direction Indica a direção da ordenação, podendo ser ascendente ou descendente(ASC ou DESC).
+	 * 
+	 * @return Page<?> uma Page que é uma sub-lista contendo um número definido de registros
+	 * */
+	/*
+	 * @RequestParam diferente do @PathVariable que pega o {id} da URI a anotação
+	 * @RequestParam usará os parâmetros da URI como exemplo 
+	 * "/page?page=1&linesPerPage=10&orderBy=nome" etc.
+	 * 
+	 * São utilizados valores padrões para cada parâmetro a sua passagem é opcional.
+	 * */
+	@GetMapping("/page")
+	public ResponseEntity<Page<CategoriaDTO>> findPage(
+			@RequestParam(value="page", defaultValue="0") Integer page, 
+			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage, 
+			@RequestParam(value="orderBy", defaultValue="nome") String orderBy, 
+			@RequestParam(value="direction", defaultValue="ASC") String direction) {
+		
+		/*Chama o método findPage() que retorna uma Page<?> de acordo com os parâmetros*/
+		Page<Categoria> list = service.findPage(page, linesPerPage, orderBy, direction);
+		
+		/*Converte a Page<?> em uma Page<?DTO> enviando apenas as informações necessárias
+		 * que queremos exibir de acordo com o DTO*/
+		Page<CategoriaDTO> listDto = list.map(obj -> new CategoriaDTO(obj));  
+		return ResponseEntity.ok().body(listDto);
 	}
 	
 }

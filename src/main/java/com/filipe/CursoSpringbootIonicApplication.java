@@ -78,12 +78,17 @@ public class CursoSpringbootIonicApplication implements CommandLineRunner {
 		
 		cat1.getProdutos().addAll(Arrays.asList(p1, p2));
 		cat2.getProdutos().addAll(Arrays.asList(p2));
+		Categoria cat3 = new Categoria(null, "Cama mesa e banho");
+		Categoria cat4 = new Categoria(null, "Eletrônicos");
+		Categoria cat5 = new Categoria(null, "Jardinagem");
+		Categoria cat6 = new Categoria(null, "Decoração");
+		Categoria cat7 = new Categoria(null, "Perfumaria");
 		
 		p1.getCategorias().addAll(Arrays.asList(cat1));
 		p2.getCategorias().addAll(Arrays.asList(cat1, cat2));
 		p3.getCategorias().addAll(Arrays.asList(cat1));
 		
-		categoriaRepository.saveAll(Arrays.asList(cat1,cat2));
+		categoriaRepository.saveAll(Arrays.asList(cat1, cat2, cat3, cat4, cat5, cat6, cat7));
 		produtoRepository.saveAll(Arrays.asList(p1,p2,p3));
 		
 		//Estados e cidades
@@ -135,7 +140,7 @@ public class CursoSpringbootIonicApplication implements CommandLineRunner {
 		ped1.setPagamento(pagto1);
 		ped2.setPagamento(pagto2);
 		
-		/*Por último adcionamos os pedidos a Lista de pedidos do Cliente.*/
+		/*Por último adicionamos os pedidos a Lista de pedidos do Cliente.*/
 		cli1.getPedidos().addAll(Arrays.asList(ped1,ped2));
 		
 		/*Salvar primeiro os pedidos que são independentes dos pagamentos*/
