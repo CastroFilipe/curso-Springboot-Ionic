@@ -1,5 +1,6 @@
 package com.filipe.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,5 +99,14 @@ public class CategoriaService {
 			/*lança a exceção personalizada que será capturada no pacote controller */
 			throw new DataIntegrityException("Não é possível excluir uma categoria que possui produtos");
 		}
+	}
+
+	/**
+	 * Método que busca todos os objetos no banco de dados.
+	 * 
+	 * @return uma Lista de objetos
+	 * */
+	public List<Categoria> findAll() {
+		return repo.findAll();
 	}
 }

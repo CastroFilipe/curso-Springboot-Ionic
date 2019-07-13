@@ -1,6 +1,8 @@
 package com.filipe.resourcesController;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.filipe.domain.Categoria;
+import com.filipe.dto.CategoriaDTO;
 import com.filipe.services.CategoriaService;
 
 @RestController
@@ -133,8 +136,37 @@ public class CategoriaResource {
 		
 		service.delete(id);
 		
-		/*Se excluído com sucesso, retorna uma resposta com corpo vazio*/
+		/*Se excluído com sucesso, retorna uma resposta sem conteúdo (corpo vazio)*/
 		return ResponseEntity.noContent().build();
+	}
+	
+	/**
+	 * Método que busca todas os Objetos
+	 * 
+	 * @return uma Resposta http com status ok(status 200) e a lista de objetos no corpo da resposta.
+	 * */
+	/*
+	 * @ResponseEntity<?> tipo do springframework que encapsula informações de uma 
+	 * resposta HTTP para um serviço rest
+	 * */
+	@GetMapping()
+	public ResponseEntity<List<CategoriaDTO>> findAll() {
+		
+		/*Faz a busca por todas as Categorias */
+		List<Categoria> list = service.findAll();
+		
+		/*O laço for percorre list e cria um objeto CategoriaDTO para cada Categoria presente 
+		 * em list. Esse processo é necessário pois queremos exibir na view apenas o id e o nome
+		 * das categorias quando o endpoint "/categorias" for chamado.
+		 * 
+		 * */
+		List<CategoriaDTO> listaDTO = new ArrayList<>();
+		for(Categoria categoria : list) {
+			listaDTO.add(new CategoriaDTO(categoria));
+		}
+		
+		/*cria um objeto ReponseEntity com o status Ok e com uma lista no conteúdo do corpo*/
+		return ResponseEntity.ok().body(listaDTO);
 	}
 	
 }
