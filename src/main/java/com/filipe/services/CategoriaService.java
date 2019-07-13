@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.filipe.domain.Categoria;
+import com.filipe.dto.CategoriaDTO;
 import com.filipe.repositories.CategoriaRepository;
 import com.filipe.services.exceptions.DataIntegrityException;
 import com.filipe.services.exceptions.ObjectNotFoundException;
@@ -136,5 +137,16 @@ public class CategoriaService {
 		 * */
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
+	}
+	
+	/**
+	 * Método auxiliar que converte um ObjetoDTO em um Objeto.
+	 * 
+	 * @param objDto o objeto DTO para ser convertido.
+	 * 
+	 * @return um objeto convertido.
+	 * */
+	public Categoria fromDTO(CategoriaDTO objDto) {
+		return new Categoria(objDto.getId(), objDto.getNome());
 	}
 }

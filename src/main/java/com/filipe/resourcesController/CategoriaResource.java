@@ -4,6 +4,8 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -67,20 +69,26 @@ public class CategoriaResource {
 	/**
 	 * Método para inserir uma nova categoria(POST).  
  	 * 
- 	 * @param obj objeto a ser inserido
+ 	 * @param objDto objeto DTO a ser inserido
 	 * 
 	 * @return uma resposta Http com status 201, sem corpo e com uma URI nos headers que 
 	 * referencia o novo objeto criado.
 	 * */
 	/*
-	 * @RequestBody : O objeto Categoria será construído a partir do objeto Json enviado
+	 * @Valid faz a validação do objeto CategoriaDTO de acordo com as anotações inseridas
+	 * no campo nome da classe CategoriaDTO 
+	 * 
+	 * @RequestBody : O objeto objDto será construído a partir do objeto Json enviado
 	 * no corpo da requisição
 	 * 
 	 * ResponseEntity<void> Quando inserir uma categoria com sucesso indica que 
 	 * será retornado uma resposta Http sem corpo.
 	 * */
 	@PostMapping()
-	public ResponseEntity<Void> insert(@RequestBody Categoria obj){
+	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto){
+		
+		/*converte o DTO numa Categoria*/
+		Categoria obj = service.fromDTO(objDto);
 		
 		/*
 		 * Método que insere um novo objeto e retorna o objeto inserido já com o novo id
@@ -109,9 +117,11 @@ public class CategoriaResource {
 	 * @return uma resposta sem conteúdo, com status 204 No Content
 	 * */
 	@PutMapping("/{id}")
-	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id){
+	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO objDto, @PathVariable Integer id){
+		Categoria obj = service.fromDTO(objDto);
+		
 		/*apenas uma garantia de que o objeto a ser editado será o mesmo do 
-		 * id vindo nos parametros*/
+		 * id vindo nos parâmetros*/
 		obj.setId(id);
 		
 		obj = service.update(obj);
