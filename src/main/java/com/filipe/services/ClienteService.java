@@ -13,15 +13,19 @@ import com.filipe.services.exceptions.ObjectNotFoundException;
 public class ClienteService {
 	
 	@Autowired
-	private ClienteRepository clienteRepository;
+	private ClienteRepository repo;
 	
-	/*
-	 * Método que retorna um objeto. Caso não encontre lançará uma exceção personalizada 
-	 * ObjectNotFoundException.
-	 * Para mais detalhes ver a classe CategoriaService que possuí o mesmo método
+	/**
+	 * Método que busca um objeto por ID, caso não encontre Lança uma exceção 
+	 * personalizada do tipo ObjectNotFoundException. Para mais informações consultar o mesmo
+	 * método na classe @Categoria
+	 * 
+	 * @param id o Id do objeto buscado.
+	 * 
+	 * @throws ObjectNotFoundException se não encontrar o objeto no banco de dados.
 	 * */
 	public Cliente find(Integer id) {
-		Optional<Cliente> clienteOptional = clienteRepository.findById(id);
+		Optional<Cliente> clienteOptional = repo.findById(id);
 		
 		return clienteOptional.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não Encontrado! Id: " + id + " ,tipo:"+ Cliente.class.getName()));

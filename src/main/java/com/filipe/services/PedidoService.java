@@ -16,12 +16,17 @@ public class PedidoService {
 	private PedidoRepository repo;
 
 	/**
-	 * Método que busca uma Pedido por ID, caso não encontre Lança uma exceção 
-	 * personalizada (Uma exceção criada pelo programador).
+	 * Método que busca um objeto por ID, caso não encontre Lança uma exceção 
+	 * personalizada do tipo ObjectNotFoundException. Para mais informações consultar o mesmo
+	 * método na classe @Categoria
+	 * 
+	 * @param id o Id do objeto buscado.
+	 * 
+	 * @throws ObjectNotFoundException se não encontrar o objeto no banco de dados.
 	 * */
 	public Pedido find(Integer id) {
 		
-		/**
+		/*
 		 * findById() retorna um Objeto Optional.
 		 * Um Objeto Optional funciona como um container na qual o Objeto Pedido pode ou
 		 * não estar contido.
@@ -31,10 +36,10 @@ public class PedidoService {
 		 * */
 		Optional<Pedido> obj = repo.findById(id);
 		
-		/**
+		/*
 		 * Retorna o objeto Pedido presente dentro do "container" Optional.
 		 * Caso não exista o objeto Pedido, devido a negativa da busca anterior, lançará uma exceção.
-		 * A exceção será lançada para a classe que chamou o metodo buscarPorId().
+		 * A exceção será lançada para a classe que chamou o metodo find()
 		 * 
 		 * ObjectNotFoundException é uma exceção personalizada criada no pacote services.exceptions
 		 * */

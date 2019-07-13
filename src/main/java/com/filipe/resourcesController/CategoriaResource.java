@@ -36,25 +36,26 @@ public class CategoriaResource {
 	 * resposta HTTP para um serviço rest
 	 * 
 	 * @PathVariable, necessário para informar que o Integer id irá receber o {id} 
-	 * que veio na url
+	 * que veio na uri
 	 * */
 	@GetMapping("/{id}")
 	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
 		
 		/*
-		 * Chama o método buscarPorId(). Esse método poderá lançar uma exceção 
-		 * (ObjectNotFoundException) se o objeto não for encontrado.
+		 * Chama o método find(id). Esse método poderá lançar uma exceção 
+		 * do tipo ObjectNotFoundException se o objeto não for encontrado no banco de dados.
 		 * 
-		 * Se a exceção for lançada: Utilizar um tryCatch para tratar ou utilizar um Objeto 
-		 * do tipo Handler.
+		 * Quando a exceção for lançada o objeto handler do tipo ResourceExceptionHandler interceptará
+		 * a exceção e fará o chamará o método adequado para trata-lá.
+		 * 
 		 * Objetos Handler utilizam a anotação @ControllerAdvice que, em resumo, interceptará
-		 * a exceção lançada. Com isso o códio de tratamento será colocado em outra classe,
+		 * a exceção lançada. Com isso o código de tratamento será colocado em outra classe,
 		 * deixando o código mais organizado.
 		 * 
 		 * */
 		Categoria categoria = service.find(id);
 
-		//cria um objeto ReponseEntity com o status Ok e com uma categoria como conteúdo do corpo.
+		//cria um objeto ReponseEntity com o status Ok e com o objeto como conteúdo do corpo.
 		return ResponseEntity.ok().body(categoria);
 	}
 	
@@ -123,9 +124,16 @@ public class CategoriaResource {
 	 */
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
+		/*
+		 * Método delete(id) irá deletar o objeto se este não possuir uma referência em outras classes.
+		 * Caso possua referências o método delete lança uma exceção do tipo DataIntegrityException
+		 * do pacote service.exceptions e que será interceptada pelo ResourceExceptionHandler do
+		 * pacote controller.exceptions
+		 * */
+		
 		service.delete(id);
 		
-		/*uma resposta com corpo vazio*/
+		/*Se excluído com sucesso, retorna uma resposta com corpo vazio*/
 		return ResponseEntity.noContent().build();
 	}
 	
