@@ -82,12 +82,24 @@ public class CategoriaService {
 	public Categoria update(Categoria obj) {
 		/*Antes de atualizar fazer uma busca no banco para garantir que o objeto exista no banco
 		 * Se não existir será lançada a exceção no método buscarPorId*/
-		find(obj.getId());
+		Categoria newObj = find(obj.getId());
+		
+		/*new Obj é o objeto atual que está salvo no banco. UpdateData é o método para 
+		 * atualizar os atributos de newObj a partir do obj que veio da view. Após isso o newObj
+		 * será salvo com os novos atributos atualizados*/
+		updateData(newObj, obj);
 		
 		/*O método save é usado tanto para inserir quanto para atualizar.
 		 * Isso é decidido de acordo com o ID. Se o id for nulo ele irá inserir o objeto
 		 * se o id não for nulo, o objeto será atualizado*/
 		return repo.save(obj);
+	}
+	
+	/**
+	 * Método auxiliar que atualiza um objeto do banco de dados
+	 * */
+	private void updateData(Categoria newObj, Categoria obj) {
+		newObj.setNome(obj.getNome());
 	}
 
 	public void delete(Integer id) {
