@@ -1,11 +1,18 @@
 package com.filipe.resourcesController;
 
+import java.net.URI;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.filipe.domain.Pedido;
 import com.filipe.services.PedidoService;
@@ -50,5 +57,26 @@ public class PedidoResource {
 
 		//cria um objeto ReponseEntity com o status Ok e com o objeto como conteúdo do corpo.
 		return ResponseEntity.ok().body(pedido);
+	}
+	
+	/**Método que insere um pedido*/
+	@PostMapping()
+	public ResponseEntity<Void> insert(@Valid @RequestBody Pedido obj){
+		/*
+		 * Método que insere um novo objeto e retorna o objeto inserido já com o novo id
+		 * */
+		obj = service.insert(obj);
+		
+		/*
+		 * Por padrão, o status http 201 CREATED deve retornar o objeto criado e a URI do
+		 * novo objeto criado. A linha abaixo criará uma URI para referenciar o novo objeto.
+		 * Exemplo : pedidos/{id} 
+		 * */
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		
+		
+		/*Retorna uma resposta HTTP sem corpo com um status e o uri no Headers que referência o novo obj 
+		 * Ex: pedidos/{id}*/
+		return ResponseEntity.created(uri).build();
 	}
 }

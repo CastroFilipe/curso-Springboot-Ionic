@@ -11,6 +11,7 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.filipe.domain.enums.EstadoPagamento;
 
 /**
@@ -31,11 +32,17 @@ import com.filipe.domain.enums.EstadoPagamento;
  * será preciso definir as colunas referentes a PagamentoComCartao como null no banco de dados e 
  * vice-versa.
  * 
+ * @JsonTypeInfo Basicamente diz que a classe Pagamento ao ser serializada como Json conterá um
+ * campo adicional @type 
+ * Esse campo é necessário para diferenciar PagementoComCartao e PagamentoComBoleto no momento 
+ * de enviar o Json do view ao controler. Anotações @JsonTypeName foram inseridas nas duas subclasses
+ * 
  * A classe será abstrata para não permitir a instanciação de objetos do tipo Pagamento. 
  * Para instanciar utilize as subclasses PagamentoComBoleto e PagamentoComCartao
  * */
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "@type")
 public abstract class Pagamento implements Serializable {
 	private static final long serialVersionUID = 1L;
 	

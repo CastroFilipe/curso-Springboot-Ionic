@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.filipe.domain.enums.EstadoPagamento;
 
 /**
@@ -13,8 +14,13 @@ import com.filipe.domain.enums.EstadoPagamento;
  * 
  * @Entity indica ao JPA que essa classe é uma Entidade. Assim o hibernate fará a persistência da
  * classe no banco.
+ * 
+ * @JsonTypeName Informa que o identificador pagamentoComBoleto representa essa classe.
+ * Assim um objeto PagamentoComBoleto poderá ser criado quando as informações Json vindas da view 
+ * contiverem o "@type = "pagamentoComCartao"". 
  * */
 @Entity
+@JsonTypeName("pagamentoComBoleto")
 public class PagamentoComBoleto extends Pagamento {
 	private static final long serialVersionUID = 1L;
 	
