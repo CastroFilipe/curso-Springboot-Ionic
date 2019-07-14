@@ -1,5 +1,6 @@
 package com.filipe.resourcesController;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,14 +12,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.filipe.domain.Cliente;
 import com.filipe.dto.ClienteDTO;
+import com.filipe.dto.ClienteNewDTO;
 import com.filipe.services.ClienteService;
 
 @RestController
@@ -60,6 +64,48 @@ public class ClienteResource {
 		Cliente cliente = service.find(id);
 		
 		return ResponseEntity.ok().body(cliente);
+	}
+	
+	/**
+	 * Método para inserir uma novo Cliente(POST).  
+ 	 * 
+ 	 * @param objDto objeto DTO a ser inserido
+	 * 
+	 * @return uma resposta Http com status 201, sem corpo e com uma URI nos headers que 
+	 * referencia o novo objeto criado.
+	 * */
+	/*
+	 * @Valid faz a validação do objeto ClienteDTO de acordo com as anotações inseridas
+	 * nos campos da classe ClienteDTO 
+	 * 
+	 * @RequestBody : O objeto objDto será construído a partir do objeto Json enviado
+	 * no corpo da requisição
+	 * 
+	 * ResponseEntity<void> Quando inserir um Cliente com sucesso indica que 
+	 * será retornado uma resposta Http sem corpo.
+	 * */
+	@PostMapping()
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDto){
+		
+		/*converte o DTO num Cliente*/
+		Cliente obj = service.fromDTO(objDto);
+		
+		/*
+		 * Método que insere um novo objeto e retorna o objeto inserido já com o novo id
+		 * */
+		obj = service.insert(obj);
+		
+		/*
+		 * Por padrão, o status http 201 CREATED deve retornar o objeto criado e a URI do
+		 * novo objeto criado. A linha abaixo criará uma URI para referenciar o novo objeto.
+		 * Exemplo : clientes/{id} 
+		 * */
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+		
+		
+		/*Retorna uma resposta HTTP sem corpo com um status e o uri no Headers que referência o novo obj 
+		 * Ex: clientes/{id}*/
+		return ResponseEntity.created(uri).build();
 	}
 	
 	

@@ -3,6 +3,8 @@ package com.filipe.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -10,9 +12,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.filipe.domain.Cidade;
 import com.filipe.domain.Cliente;
+import com.filipe.domain.Endereco;
+import com.filipe.domain.enums.TipoCliente;
 import com.filipe.dto.ClienteDTO;
+import com.filipe.dto.ClienteNewDTO;
 import com.filipe.repositories.ClienteRepository;
+import com.filipe.repositories.EnderecoRepository;
 import com.filipe.services.exceptions.DataIntegrityException;
 import com.filipe.services.exceptions.ObjectNotFoundException;
 
@@ -21,6 +28,9 @@ public class ClienteService {
 	
 	@Autowired
 	private ClienteRepository repo;
+	
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 	
 	/**
 	 * Método que busca um objeto por ID, caso não encontre Lança uma exceção 
@@ -36,6 +46,31 @@ public class ClienteService {
 		
 		return clienteOptional.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não Encontrado! Id: " + id + " ,tipo:"+ Cliente.class.getName()));
+	}
+	
+	/**
+	 * Método para inserir uma objeto Cliente no banco de dados.
+	 * 
+	 * @param obj um objeto a ser inserido
+	 * */
+	@Transactional
+	public Cliente insert(Cliente obj) {
+		/*
+		 * Garante que qualquer Cliente a ser inserido tenha o id nulo pois,
+		 * quando o id não for nulo, o objeto Cliente estará sendo atualizado e 
+		 * não inserido.
+		 * 
+		 * */
+		obj.setId(null);
+		
+		/* Salva o objeto e retorna a própria instância salva */
+		obj = repo.save(obj);
+		
+		/*salva os Enderecos do cliente no Banco*/
+		enderecoRepository.saveAll(obj.getEnderecos());
+		
+		
+		return obj;
 	}
 	
 	/**
@@ -125,5 +160,57 @@ public class ClienteService {
 	 * */
 	public Cliente fromDTO(ClienteDTO objDto) {
 		return new Cliente(objDto.getId(),objDto.getNome(),objDto.getEmail(), null, null);
+	}
+	
+	/*Esse método é uma sobrecarga do método anterior.*/
+	/**
+	 * Método auxiliar que converte um ClienteNewDTO em um Cliente.
+	 * O objeto ClienteNewDTO contém todas as informações do Cliente, Endereco, Telefone e Cidade.
+	 * Esses objetos serão instanciados a partir dos atributos contidos em ClienteNewDTO
+	 * 
+	 * @param objDto o objeto ClienteNewDTO com todas as informações necessárias para criar
+	 * Objetos do tipo Cliente, Endereco, Telefone e Cidade
+	 * 
+	 * @return um objeto Cliente convertido.
+	 * */
+	public Cliente fromDTO(ClienteNewDTO objDto) {
+		/*cria o Cliente*/
+		Cliente cli = new Cliente(
+				null, 
+				objDto.getNome(), 
+				objDto.getEmail(), 
+				objDto.getCpfOuCnpj(), 
+				TipoCliente.toEnum(objDto.getTipo()));
+		
+		/*cria o Cidade apenas com id*/
+		Cidade cid = new Cidade(objDto.getCidadeId(), null, null);
+		
+		/*cria o Endereco e já vincula o Cliente e a Cidade*/
+		Endereco endereco = new Endereco(
+				null, 
+				objDto.getLogradouro(), 
+				objDto.getNumero(), 
+				objDto.getComplemento(), 
+				objDto.getBairro(), 
+				objDto.getCep(), 
+				cli, 
+				cid);
+		
+		/*Adicona o Endereco criado a lista de enderecos presente no Objeto Cliente*/
+		cli.getEnderecos().add(endereco);
+		
+		/*Adiciona o Telefone Obrigatório a lista de telefones do Cliente*/
+		cli.getTelefones().add(objDto.getTelefone1());
+		
+		/*Os demais telefones são opcionais e só serão adicionados a lista se existirem*/
+		if(objDto.getTelefone2() != null) {
+			cli.getTelefones().add(objDto.getTelefone2());
+		}
+		
+		if(objDto.getTelefone3() != null) {
+			cli.getTelefones().add(objDto.getTelefone3());
+		}
+		
+		return cli;
 	}
 }
