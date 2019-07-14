@@ -20,6 +20,7 @@ public interface ProdutoRepository extends JpaRepository<Produto, Integer> {
 	 * Método que faz a busca de um produto a partir do nome e de uma lista de categorias a qual o produto
 	 * possa estar contido.
 	 * 
+	 * Pesquisar "jpa query method keywords"
 	 * */
 	/* 
 	 * O framework Spring facilita a criação de métodos com consultas JPQL. Por isso não é necessário

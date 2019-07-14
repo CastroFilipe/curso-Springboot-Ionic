@@ -51,6 +51,14 @@ public class ItemPedido implements Serializable {
 		this.preco = preco;
 	}
 	
+	/**Faz o cálculo do subtotal 
+	 * Ex: Comprar duas TVs de 40 polegadas, R$ 1000 cada sem descontos.
+	 * Subtotal = R$ 2000
+	 * */
+	public double getSubTotal() {
+		return (preco - desconto) * quantidade;
+	}
+	
 	@JsonIgnore//Será ignorado na serialização, também evitará serialização cíclica do Json
 	public Pedido getPedido() {
 		return id.getPedido();

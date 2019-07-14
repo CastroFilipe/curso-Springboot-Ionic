@@ -79,6 +79,21 @@ public class Pedido implements Serializable {
 		this.cliente = cliente;
 		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
+	
+	/**
+	 * Cálculo do valor total de um pedido.
+	 * Cálculo feito através da soma do valor de cada ItemPedido.
+	 * 
+	 * @return o valor total do pedido.
+	 * */
+	public double getValorTotal() {
+		double soma = 0.0;
+		for (ItemPedido ip : itens) {
+			soma = soma + ip.getSubTotal();
+		}
+		return soma;
+	}
+
 
 	public Integer getId() {
 		return id;
