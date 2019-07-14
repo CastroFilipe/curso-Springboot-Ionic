@@ -2,28 +2,58 @@ package com.filipe.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.filipe.services.validation.ClienteInsert;
+
+
 /**
  * Objeto DTO que junta todos os atributos de um Cliente para facilitar o envio das informações 
  * do Cliente a partir da view de cadastro de Cliente.
  *  As requisições do tipo POST para inserir um novo objeto deve conter todos os atributos 
  *  especificados nesta classe. 
  * */
+/*
+ * ClienteInsert Anotação personalizada que faz a validação do atributo cpfOuCnpj
+ * */
+@ClienteInsert
 public class ClienteNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@NotBlank(message="Preenchimento obrigatório")
+	@Length(min=5, max=120, message="O tamanho deve ser entre 5 e 120 caracteres")
 	private String nome;
+	
+	@NotBlank(message="Preenchimento obrigatório")
+	@Email(message="Email inválido")
 	private String email;
+	
+	@NotBlank(message="Preenchimento obrigatório")
 	private String cpfOuCnpj;
+	
 	private Integer tipo;
 
+	@NotBlank(message="Preenchimento obrigatório")
 	private String logradouro;
+	
+	@NotBlank(message="Preenchimento obrigatório")
 	private String numero;
+	
 	private String complemento;
+	
 	private String bairro;
+	
+	@NotBlank(message="Preenchimento obrigatório")
 	private String cep;
 
+	@NotBlank(message="Preenchimento obrigatório")
 	private String telefone1;
+	
 	private String telefone2;
+	
 	private String telefone3;
 	
 	private Integer cidadeId;
