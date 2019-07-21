@@ -146,6 +146,8 @@ public class CategoriaService {
 		 * O objeto do tipo PageRequest recebe o retorno da consulta. O método estático of retorna 
 		 * um Objeto PageRequest de acordo com as propriedades definidas nos parâmetros.
 		 * Esse objeto será usado para requisitar o Objeto Page no método findAll().
+		 * 
+		 * PageRequest prepara a consulta de acordo com os parâmetros. 
 		 * */
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repo.findAll(pageRequest);
