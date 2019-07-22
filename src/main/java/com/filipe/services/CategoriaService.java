@@ -92,7 +92,7 @@ public class CategoriaService {
 		/*O método save é usado tanto para inserir quanto para atualizar.
 		 * Isso é decidido de acordo com o ID. Se o id for nulo ele irá inserir o objeto
 		 * se o id não for nulo, o objeto será atualizado*/
-		return repo.save(obj);
+		return repo.save(newObj);
 	}
 	
 	/**
