@@ -17,12 +17,13 @@ import com.filipe.services.validation.ClienteInsert;
  *  especificados nesta classe. 
  * */
 /*
- * ClienteInsert Anotação personalizada que faz a validação do atributo cpfOuCnpj
+ * ClienteInsert Anotação personalizada do pacote com.filipe.services.validation que faz a validação do atributo cpfOuCnpj
+ * Para uma validação mais simples num app real utilize a anotação @CPF do pacote org.hibernate.validator.constraints.br
  * */
 @ClienteInsert
 public class ClienteNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
 	@NotBlank(message="Preenchimento obrigatório")
 	@Length(min=5, max=120, message="O tamanho deve ser entre 5 e 120 caracteres")
 	private String nome;

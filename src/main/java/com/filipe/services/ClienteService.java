@@ -66,7 +66,8 @@ public class ClienteService {
 		/* Salva o objeto e retorna a própria instância salva */
 		obj = repo.save(obj);
 		
-		/*salva os Enderecos do cliente no Banco*/
+		/*salva os Enderecos do cliente no Banco. OBS: Desnecessário quando se usa CascadeType.ALL na
+		 * lista de endereços da classe Cliente*/
 		enderecoRepository.saveAll(obj.getEnderecos());
 		
 		

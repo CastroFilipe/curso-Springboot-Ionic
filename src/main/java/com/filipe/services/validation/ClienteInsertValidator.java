@@ -23,6 +23,8 @@ import com.filipe.services.validation.utils.BR;
 /*
  * Classe apenas de curiosidade para testar as diversas possibilidades de implementação de um
  * validator personalizado
+ * 
+ * ConstraintValidator indica a anotação que será usada e a classe que aceitara a anotação.
  * */
 
 public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert, ClienteNewDTO> {
@@ -34,19 +36,23 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
 	public void initialize(ClienteInsert ann) {
 	}
 
+	//método que valida os campos.
 	@Override
 	public boolean isValid(ClienteNewDTO objDto, ConstraintValidatorContext context) {
 
 		List<FieldMessage> list = new ArrayList<>();
 
+		//se for uma pessoa física fará uma validação de CPF
 		if (objDto.getTipo().equals(TipoCliente.PESSOAFISICA.getCod()) && !BR.isValidCPF(objDto.getCpfOuCnpj())) {
 			list.add(new FieldMessage("cpfOuCnpj", "CPF inválido"));
 		}
-
+		
+		//se for uma pessoa Jurídica fará uma validação de CNPJ
 		if (objDto.getTipo().equals(TipoCliente.PESSOAJURIDICA.getCod()) && !BR.isValidCNPJ(objDto.getCpfOuCnpj())) {
 			list.add(new FieldMessage("cpfOuCnpj", "CNPJ inválido"));
 		}
 		
+		//Teste para impedir que um email repetido seja inserido no banco de dados.
 		Cliente aux = repo.findByEmail(objDto.getEmail());
 		if (aux != null) {
 			list.add(new FieldMessage("email", "Email já existente"));
@@ -57,6 +63,8 @@ public class ClienteInsertValidator implements ConstraintValidator<ClienteInsert
 			context.buildConstraintViolationWithTemplate(e.getMessage()).addPropertyNode(e.getFieldName())
 					.addConstraintViolation();
 		}
+		
+		//Se a lista estiver vazia retorna true: os testes foram bem sucedidos e a lista não contém nenhum erro. 
 		return list.isEmpty();
 	}
 }

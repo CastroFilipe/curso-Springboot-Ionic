@@ -16,7 +16,11 @@ import javax.validation.Payload;
  * */
 /*
  * Classe apenas de curiosidade para testar as diversas possibilidades de implementação de um
- * validator personalizado
+ * validator personalizado.
+ * 
+ * ClienteInsertValidator.class representa a classe com as operações de validação.
+ * A classe ClienteInsert representa apenas a anotação @ClienteInsert
+ * Sempre que for criar uma anotação: copiar essa classe mudando o nome da classe e o valor contido em validateBy
  * */
 
 @Constraint(validatedBy = ClienteInsertValidator.class)
