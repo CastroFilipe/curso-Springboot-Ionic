@@ -1,4 +1,4 @@
-package com.filipe.resourcesController.utils;
+package com.filipe.resources.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

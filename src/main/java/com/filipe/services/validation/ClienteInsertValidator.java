@@ -12,7 +12,7 @@ import com.filipe.domain.Cliente;
 import com.filipe.domain.enums.TipoCliente;
 import com.filipe.dto.ClienteNewDTO;
 import com.filipe.repositories.ClienteRepository;
-import com.filipe.resourcesController.exceptions.FieldMessage;
+import com.filipe.resources.exceptions.FieldMessage;
 import com.filipe.services.validation.utils.BR;
 
 /**

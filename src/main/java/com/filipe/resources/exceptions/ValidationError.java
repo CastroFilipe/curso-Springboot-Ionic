@@ -1,4 +1,4 @@
-package com.filipe.resourcesController.exceptions;
+package com.filipe.resources.exceptions;
 
 import java.util.ArrayList;
 import java.util.List;

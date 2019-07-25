@@ -1,4 +1,4 @@
-package com.filipe.resourcesController;
+package com.filipe.resources;
 
 import java.net.URI;
 import java.util.ArrayList;

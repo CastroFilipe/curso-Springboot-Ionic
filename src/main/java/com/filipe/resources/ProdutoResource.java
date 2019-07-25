@@ -1,4 +1,4 @@
-package com.filipe.resourcesController;
+package com.filipe.resources;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.filipe.domain.Produto;
 import com.filipe.dto.ProdutoDTO;
-import com.filipe.resourcesController.utils.URL;
+import com.filipe.resources.utils.URL;
 import com.filipe.services.ProdutoService;
 
 @RestController

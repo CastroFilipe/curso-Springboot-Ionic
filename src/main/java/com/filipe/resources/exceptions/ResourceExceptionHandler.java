@@ -1,4 +1,4 @@
-package com.filipe.resourcesController.exceptions;
+package com.filipe.resources.exceptions;
 
 import javax.servlet.http.HttpServletRequest;
 
