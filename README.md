@@ -1,7 +1,7 @@
 # Curso Spring boot e Ionic
 ![Status descontinuado](https://img.shields.io/badge/STATUS-DESCONTINUADO-af2222?style=flat) 
-![Progresso](https://img.shields.io/badge/PROGRESSO-33%25-brightgreen) 
-<a href="https://opensource.org/licenses/MIT" target="_blank"><img alt="GitHub license" src="https://img.shields.io/github/license/CastroFilipe/curso-spring-boot-mvc-security"></a>  
+![Progresso](https://img.shields.io/badge/PROGRESSO-35%25-brightgreen) 
+<a href="https://unlicense.org/" target="_blank"><img alt="GitHub license" src="https://img.shields.io/github/license/CastroFilipe/curso-spring-boot-Ionic"></a>  
 
 Aplicação desenvolvida durante o decorrer das aulas do curso “Spring boot, Hibernate, Rest e Ionic”, disponível na Udemy. O projeto elaborado no curso representa uma loja online onde o cliente faz a autenticação no aplicativo, seleciona os produtos, adiciona os produtos no carrinho, recebe e-mail de confirmação de compra etc. O Código deste repositório contém apenas a API, construída usando Java, Spring boot, JPA com hibernate, MySQL, envio de e-mail com SMTP, autenticação e autorização com tokens JWT, dentre outros.
 
@@ -19,9 +19,9 @@ Aplicação desenvolvida durante o decorrer das aulas do curso “Spring boot, H
 - **Duração Total**: 31 horas de vídeo 
 - **Carga Horária**: -  
 - **Principais tópicos abordados**: Spring boot, JPA, Mapeamento de entidades para persistência, Criptografia de Senha com bcrypt, autenticação e autorização com tokens JWT, serviço de e-mail via SMTP, serviço de confirmação de cadastro de E-mail, Deploy da aplicação no Heroku, dentre outros.  
-- **Progresso**: 33%  
-- **Status**: Cancelado a partir do momento que o back-end foi concluído, pois eu não tinha interesse em aprender Ionic
-* **Link para o curso**: [Clique aqui](https://www.udemy.com/course/spring-boot-mvc-com-spring-security/)
+- **Progresso**: 35%  
+- **Status**: Cancelado a partir do momento que o back-end foi concluído, pois eu não tinha interesse em aprender Ionic  
+- **Link para o curso**: [Clique aqui](https://www.udemy.com/course/spring-boot-ionic/)
 
 ### Minhas considerações: ![Nota](https://img.shields.io/badge/NOTA-4%2F5-brightgreen)  
 :star::star::star::star:
